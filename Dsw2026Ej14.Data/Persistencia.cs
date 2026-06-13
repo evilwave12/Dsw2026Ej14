@@ -1,16 +1,21 @@
 ﻿using Dsw2026Ej14.Data.Dtos;
-using Dsw2026Ej14.Domain;
+using Dsw2026Ej14.Domain.Entities;
 using System.Text.Json;
+using Dsw2026Ej14.Data.Interfaces;
 
 namespace Dsw2026Ej14.Data;
 
-public class Persistencia
+public class Persistencia : IPersistencia
 {
-    private static readonly List<Sucursal> Sucursales = new List<Sucursal>();
-    private static readonly List<Vehiculo> Vehiculos = new List<Vehiculo>();
-    private static readonly List<Responsable> Responsables = new List<Responsable>();
+    private readonly List<Sucursal> Sucursales = new List<Sucursal>();
+    private readonly List<Vehiculo> Vehiculos = new List<Vehiculo>();
+    private readonly List<Responsable> Responsables = new List<Responsable>();
 
-    private static void InicializarResponsables()
+    public Persistencia()
+    {
+        InicializarDatos();
+    }
+    private void InicializarResponsables()
     {
         var responsablesData = CargarDatosDeArchivo<ResponsableDto>("responsables");
 
@@ -24,7 +29,7 @@ public class Persistencia
         }
     }
 
-    private static void InicializarSucursales()
+    private void InicializarSucursales()
     {
         var sucursalesData = CargarDatosDeArchivo<SucursalDto>("sucursales");
 
@@ -42,7 +47,7 @@ public class Persistencia
         }
     }
 
-    private static void InicializarVehiculos()
+    private void InicializarVehiculos()
     {
         var vehiculosData = CargarDatosDeArchivo<VehiculoDto>("vehiculos");
 
@@ -70,29 +75,29 @@ public class Persistencia
         }
     }
 
-    private static List<T>? CargarDatosDeArchivo<T>(string file)
+    private List<T>? CargarDatosDeArchivo<T>(string file)
     {
-        string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data\\Sources", $"{file}.json");
+        string jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Sources", $"{file}.json");
         string jsonContent = File.ReadAllText(jsonPath);
         return JsonSerializer.Deserialize<List<T>>(jsonContent);
     }
 
-    public static List<Vehiculo> GetVehiculos()
+    public List<Vehiculo> GetVehiculos()
     {
         return Vehiculos;
     }
 
-    public static Vehiculo? GetVehiculo(string patente)
+    public Vehiculo? GetVehiculo(string patente)
     {
         return Vehiculos.Find(v => v.Patente == patente);
     }
 
-    public static List<Sucursal> GetSucursales()
+    public List<Sucursal> GetSucursales()
     {
         return Sucursales;
     }
 
-    public static bool AgregarVehiculo(Vehiculo vehiculo)
+    public bool AgregarVehiculo(Vehiculo vehiculo)
     {
         try
         {
@@ -105,7 +110,7 @@ public class Persistencia
         }
     }
 
-    public static void InicializarDatos()
+    private void InicializarDatos()
     {
         InicializarResponsables();
         InicializarSucursales();

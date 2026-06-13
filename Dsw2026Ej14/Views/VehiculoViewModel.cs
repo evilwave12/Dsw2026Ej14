@@ -1,6 +1,6 @@
-﻿using Dsw2026Ej14.Domain;
+﻿using Dsw2026Ej14.Domain.Entities;
 
-namespace Dsw2026Ej14.Views;
+namespace Dsw2026Ej14.Presentation.Views;
 
 public class VehiculoViewModel
 {

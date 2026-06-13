@@ -1,4 +1,4 @@
-﻿namespace Dsw2026Ej14.Domain;
+﻿namespace Dsw2026Ej14.Domain.Entities;
 
 public abstract class Vehiculo: EntidadBase
 {
