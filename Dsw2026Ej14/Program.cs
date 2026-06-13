@@ -18,7 +18,7 @@ namespace Dsw2026Ej14
             contenedor.AddTransient<IListarVehiculosView, ListarVehiculosView>();
             contenedor.AddTransient<IAgregarVehiculoPresenter, AgregarVehiculoPresenter>();
             contenedor.AddTransient<IAgregarVehiculoView, AgregarVehiculoView>();
-            contenedor.AddTransient<IPersistencia, Persistencia>();
+            contenedor.AddSingleton<IPersistencia, Persistencia>(); //jijon de la gran puta
 
             var provider = contenedor.BuildServiceProvider();
 
